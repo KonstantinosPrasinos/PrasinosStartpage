@@ -23,7 +23,7 @@ export const settings = persistedStore<AppSettings>('user-settings', {
 
 export const cachedLocation = persistedStore<CachedLocation | null>('cached-location', null);
 
-export const visibleWidgets = persistedStore<WidgetType[]>('visible-widgets', ['weather', 'favorites', 'tasks']);
+export const visibleWidgets = persistedStore<WidgetType[]>('visible-widgets', []);
 
 import { writable } from 'svelte/store';
 export const isEditingWidgets = writable(false);
