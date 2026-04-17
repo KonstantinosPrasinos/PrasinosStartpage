@@ -12,7 +12,7 @@
 	} from '$lib/functions/getWeatherData';
 	import { getCityName, type LocationData } from '$lib/functions/getCityName';
 	import LoadingIndicator from './LoadingIndicator.svelte';
-	import { settings } from '$lib/store/stores';
+	import { settings, cachedLocation } from '$lib/store/stores';
 
 	let error: string | null = null;
 	let loading: boolean = true;
@@ -66,18 +66,47 @@
 	const initialize = async () => {
 		try {
 			loading = true;
-			const location = await getLocation();
-			
-			if (location) {
+
+			const now = Date.now();
+			const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+
+			let location: { longitude: number; latitude: number } | null = null;
+			let locData: LocationData | null = null;
+
+			if ($cachedLocation && now - $cachedLocation.lastUpdated < CACHE_DURATION) {
+				location = {
+					longitude: $cachedLocation.longitude,
+					latitude: $cachedLocation.latitude
+				};
+				locData = {
+					city: $cachedLocation.city,
+					country: $cachedLocation.country,
+					countryCode: $cachedLocation.countryCode
+				};
+			} else {
+				const fetchedLocation = await getLocation();
+				if (fetchedLocation) {
+					location = fetchedLocation;
+					locData = await getCityName(location.latitude, location.longitude);
+
+					cachedLocation.set({
+						...location,
+						...locData,
+						lastUpdated: now
+					});
+				}
+			}
+
+			if (location && locData) {
+				locationData = locData;
 				weatherData = await getWeatherData(location.longitude, location.latitude);
-				const now = new Date();
-				const hour = now.getUTCHours();
+				const date = new Date();
+				const hour = date.getUTCHours();
 
 				currentTemperature = weatherData?.hourly?.temperature_2m?.at(hour)?.toFixed(0) ?? '0';
 				description = getWeatherDescription(weatherData?.hourly?.weather_code?.[0] ?? 0);
-				locationData = await getCityName(location.latitude, location.longitude);
 
-				localizeWeatherData()
+				localizeWeatherData();
 			} else {
 				error = 'Could not retrieve location.';
 			}
