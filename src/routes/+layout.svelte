@@ -32,9 +32,34 @@
 		--on-background-color: #45403c;
 		--on-surface-color: #2d2a26;
 		--outline-color: rgba(223, 225, 229, 0.3);
+			--checkbox-color: #E2E6EB;
+
+      --red-color: #FC5C65;
+      --orange-color: #FD9644;
+      --yellow-color: #FED330;
+      --green-color: #26DE81;
+      --light-blue-color: #45AAF2;
+      --blue-color: #4B7BEC;
+      --purple-color: #A55EEA;
 
 		background-color: var(--background-color);
 		color: var(--on-background-color);
+	}
+
+	:global {
+			.Body-Medium {
+          font-weight: 400;
+          font-size: 14px;
+          letter-spacing: .25px;
+          line-height: 1.5em;
+			}
+
+      .Body-Small {
+          font-weight: 400;
+          font-size: 12px;
+          letter-spacing: .4px;
+          line-height: 1.33em;
+      }
 	}
 
 	:global(*) {
@@ -78,7 +103,7 @@
 	}
 
 	:global(.widget.large) {
-		height: 320px;
+		height: 350px;
 	}
 
 	:global(.widget.small) {

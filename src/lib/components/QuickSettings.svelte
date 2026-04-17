@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { settings } from '$lib/store/stores';
-	import { Gear, Moon, Sun, X } from 'phosphor-svelte';
+	import { settings, isEditingWidgets } from '$lib/store/stores';
+	import { Gear, Moon, Sun, X, Pencil, Check } from 'phosphor-svelte';
 
 	let isExpanded: Boolean = false;
 
@@ -15,6 +15,10 @@
     const toggleTemperature = () => {
         settings.update(s => ({ ...s, isNormal: !s.isNormal }));
     }
+
+	const toggleEditWidgets = () => {
+		isEditingWidgets.update(v => !v);
+	}
 </script>
 
 <div class="quick-settings">
@@ -55,6 +59,15 @@
 					°F
 				</div>
 			{/if}
+		</button>
+		<button class="hovering-button icon-button" title="Edit widgets" on:click={toggleEditWidgets}>
+			<div class="toggled-icon-button">
+				{#if $isEditingWidgets}
+					<Check size={24} />
+				{:else}
+					<Pencil size={24} />
+				{/if}
+			</div>
 		</button>
 	</div>
 </div>

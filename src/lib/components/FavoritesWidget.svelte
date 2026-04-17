@@ -7,13 +7,14 @@
 </script>
 
 <script lang="ts">
-	import { Pencil, PencilSlash, Plus, Trash } from 'phosphor-svelte';
+	import { Trash } from 'phosphor-svelte';
 	import AddFavoriteModal from './AddFavoriteModal.svelte';
 	import { onMount } from 'svelte';
 
-	let favorites: Favorite[] = [];
+	let { isEditMode = $bindable(false) } = $props();
+
+	let favorites: Favorite[] = $state([]);
 	let modal: AddFavoriteModal;
-	let isEditMode: boolean = false;
 
 	onMount(() => {
 		// Load favorites from localStorage if available
@@ -29,7 +30,7 @@
 		localStorage.setItem('favorites', JSON.stringify(favorites));
 	};
 
-	async function handleAddFavorite() {
+	export async function handleAddFavorite() {
 		// 2. Wait for the user to click a button
 		const favorite = await modal.open();
 
@@ -38,7 +39,7 @@
 		}
 	}
 
-	const toggleEditMode = () => {
+	export const toggleEditMode = () => {
 		isEditMode = !isEditMode;
 	}
 
@@ -49,29 +50,6 @@
 </script>
 
 <div class="favorites-widget glass widget">
-	<div class="widget-title-bar">
-		<div>Favorites:</div>
-		<div class="row">
-			<button
-				title="Add favorite"
-				class="small-icon-button icon-button"
-				on:click={handleAddFavorite}
-			>
-				<Plus size={22} />
-			</button>
-			<button
-				title="Edit favorites"
-				class="small-icon-button icon-button"
-				on:click={toggleEditMode}
-			>
-				{#if isEditMode}
-					<PencilSlash size={22} />
-				{:else}
-					<Pencil size={22} />
-				{/if}
-			</button>
-		</div>
-	</div>
 	<div class="favorites-list">
 		{#each favorites as favorite}
 			<div class="favorite-item-container">
@@ -103,19 +81,9 @@
 	.favorites-widget {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-	}
-	.widget-title-bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 1.2rem;
-		font-weight: 600;
-	}
-
-	.small-icon-button {
-		width: 22px;
-		height: 22px;
+		justify-content: center;
+		position: relative;
+		overflow: visible;
 	}
 
 	.favorites-list {
@@ -123,7 +91,6 @@
 		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: repeat(2, 1fr);
 		gap: 12px;
-		margin-top: 8px;
 	}
 
 	@keyframes fadeIn {

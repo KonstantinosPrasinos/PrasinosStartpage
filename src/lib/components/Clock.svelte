@@ -49,7 +49,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-family: 'Roboto Mono', monospace;
         text-align: center;
         color: var(--on-background-color);
         font-variant-numeric: tabular-nums;
