@@ -171,24 +171,6 @@
 		opacity: 0;
 	}
 
-	.suggestions-list::-webkit-scrollbar {
-		width: 8px;
-	}
-
-	.suggestions-list::-webkit-scrollbar-track {
-		background: transparent;
-		border-radius: 12px;
-	}
-
-	.suggestions-list::-webkit-scrollbar-thumb {
-		background: rgba(0, 0, 0, 0.3);
-		border-radius: 12px;
-	}
-
-	.suggestions-list::-webkit-scrollbar-thumb:hover {
-		background: rgba(0, 0, 0, 0.5);
-	}
-
 	li {
 		padding: 10px 20px;
 		cursor: pointer;

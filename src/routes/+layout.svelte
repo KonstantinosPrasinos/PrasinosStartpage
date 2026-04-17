@@ -38,15 +38,17 @@
 	}
 
 	:global(*) {
-		transition: background-color 0.2s ease-out, color 0.2s ease-out;
+		transition:
+			background-color 0.2s ease-out,
+			color 0.2s ease-out;
 	}
 
 	:global(.dark) {
 		--background-color: #181614;
 		--surface-color: rgba(40, 38, 35, 0.6);
 		--opaque-surface-color: rgb(40, 38, 35);
-		--on-background-color: #a8a29e; 
-		--on-surface-color: #e7e5e4; 
+		--on-background-color: #a8a29e;
+		--on-surface-color: #e7e5e4;
 		--outline-color: rgba(255, 255, 255, 0.1);
 	}
 
@@ -73,6 +75,14 @@
 		border-radius: 20px;
 		padding: 12px;
 		color: var(--on-surface-color);
+	}
+
+	:global(.widget.large) {
+		height: 320px;
+	}
+
+	:global(.widget.small) {
+		height: auto;
 	}
 
 	:global(button) {
@@ -118,5 +128,25 @@
 	:global(.normal-button:disabled) {
 		opacity: 0.4;
 		cursor: not-allowed;
+	}
+
+	:global {
+		::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: transparent;
+			border-radius: 12px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 12px;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(0, 0, 0, 0.5);
+		}
 	}
 </style>

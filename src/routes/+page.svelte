@@ -7,6 +7,7 @@
 	import WeeklyWeatherWidget from '$lib/components/WeeklyWeatherWidget.svelte';
 	import { settings } from '$lib/store/stores';
 	import { onMount } from 'svelte';
+	import TaskList from '$lib/components/TaskList.svelte';
 
 	type ThemeMode = 'light' | 'dark' | 'auto';
 
@@ -43,6 +44,7 @@
 	</div>
 	<div class="widgets side-widgets">
 		<QuickSettings />
+		<TaskList />
 	</div>
 </div>
 
