@@ -122,21 +122,23 @@
 
 <style>
 	.background-blur {
-		position: absolute;
+		position: fixed;
 		top: -50px;
 		left: -50px;
 		width: calc(100% + 100px);
 		height: calc(100% + 100px);
-		z-index: -1;
+		z-index: -10;
 		backdrop-filter: blur(100px);
+		pointer-events: none;
 	}
 
 	canvas {
-		position: absolute;
+		position: fixed;
 		top: -50px;
 		left: -50px;
 		width: calc(100% + 100px);
 		height: calc(100% + 100px);
-		z-index: -2;
+		z-index: -20;
+		pointer-events: none;
 	}
 </style>

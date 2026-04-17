@@ -49,20 +49,26 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-family: 'JetBrains Mono', monospace;
+        font-family: 'Roboto Mono', monospace;
         text-align: center;
         color: var(--on-background-color);
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
     }
 
     .clock {
-
-        font-size: 100px;
-        font-weight: 600;
+        font-size: 120px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
     }
 
     .date {
         font-size: 24px;
-        font-weight: 400;
-        opacity: 0.67;
+        font-weight: 500;
+        opacity: 0.6;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
     }
 </style>

@@ -83,7 +83,7 @@
 				<button
 					on:click={() => addFavorite()}
 					disabled={!urlIsOk || !titleIsOk}
-					class="normal-button">Confirm</button
+					class="normal-button primary">Confirm</button
 				>
 			</div>
 		</div>
@@ -93,7 +93,7 @@
 <style>
 	.title {
 		margin: 0;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		font-size: 1.25rem;
 		font-weight: 600;
 	}
@@ -106,67 +106,86 @@
 		background: rgba(0, 0, 0, 0.5);
 		display: grid;
 		place-items: center;
-		z-index: 2;
+		z-index: 100;
+        backdrop-filter: blur(4px);
 	}
 	.modal {
-		background: white;
-		padding: 40px;
-		border-radius: 20px;
+		background: var(--opaque-surface-color);
+        color: var(--on-surface-color);
+		padding: 30px;
+		border-radius: 24px;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+        width: 400px;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        border: 1px solid var(--outline-color);
 	}
 	.actions {
 		display: flex;
-		gap: 10px;
-		margin-top: 15px;
+		gap: 12px;
+		margin-top: 20px;
+        justify-content: flex-end;
 	}
+
+    .primary {
+        background-color: var(--on-background-color) !important;
+        color: var(--background-color) !important;
+        font-weight: 600;
+        border: 1px solid transparent !important;
+    }
+
+    .primary:not(:disabled):hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .primary:not(:disabled):active {
+        transform: translateY(0);
+    }
 
 	.input-group {
 		display: flex;
 		flex-direction: column;
-		gap: 8px; /* Space between label and input */
+		gap: 8px;
 		width: 100%;
-		margin-bottom: 16px;
+		margin-bottom: 12px;
 	}
 
 	label {
 		font-size: 0.85rem;
 		font-weight: 500;
-		color: #4b5563; /* Cool Gray */
+		opacity: 0.8;
 		margin-left: 2px;
 	}
 
 	input {
-		font-family: inherit; /* Uses your JetBrains Mono or App font */
+		font-family: inherit;
 		font-size: 1rem;
 		padding: 12px 16px;
-		border-radius: 8px;
-		border: 1px solid #e2e8f0; /* Light Slate Border */
-		background-color: #f8fafc; /* Very subtle off-white */
-		color: #1e293b;
+		border-radius: 12px;
+		border: 1px solid var(--outline-color);
+		background-color: var(--surface-color);
+		color: var(--on-surface-color);
 		outline: none;
 		transition: all 0.1s ease-in-out;
 		width: 100%;
-		box-sizing: border-box; /* Ensures padding doesn't break width */
+		box-sizing: border-box;
 	}
 
-	/* Placeholder Styling */
 	input::placeholder {
-		color: #94a3b8;
-		opacity: 1;
+		color: var(--on-surface-color);
+		opacity: 0.4;
 	}
 
-	/* Interaction States */
 	input:hover {
-		border-color: #cbd5e1; /* Slightly darker on hover */
-		background-color: #ffffff;
+		background-color: var(--opaque-surface-color);
 	}
 
 	input:focus {
-		border-color: #3b82f6; /* Blue Border */
-		background-color: #ffffff;
-		/* The "Glow" Ring Effect */
-		box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+		border-color: var(--on-background-color);
+		background-color: var(--opaque-surface-color);
+		box-shadow: 0 0 0 4px var(--outline-color);
 	}
 </style>

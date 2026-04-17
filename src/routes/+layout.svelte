@@ -7,6 +7,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<title>Homepage</title>
 </svelte:head>
 
 {@render children()}
@@ -68,7 +69,7 @@
 
 	:global(.widget) {
 		width: 320px;
-		height: 150px;
+		height: 165px;
 		border-radius: 20px;
 		padding: 12px;
 		color: var(--on-surface-color);
@@ -84,36 +85,38 @@
 		cursor: pointer;
 	}
 	:global(.icon-button) {
-		transition: transform 0.05s ease-out;
+		transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 	:global(.icon-button:hover) {
-		transform: scale(1.05);
+		transform: scale(1.1);
 	}
 	:global(.icon-button:active) {
-		transform: scale(0.95);
+		transform: scale(0.9);
 	}
 
 	:global(.normal-button) {
-		padding: 10px 16px;
-		border-radius: 20px;
+		padding: 10px 24px;
+		border-radius: 100px;
 		background-color: var(--surface-color);
-		border: 1px solid var(--outline-color);
-		transition: box-shadow 0.1s ease-in-out, border-color 0.1s ease-in-out;
+		border: 1px solid rgba(128, 128, 128, 0.3);
+		transition: all 0.2s ease-in-out;
+		font-weight: 500;
 	}
 
-	:global(.normal-button:hover) {
-		box-shadow: 0 4px 12px rgba(32, 33, 36, 0.3);
+	:global(.normal-button:not(:disabled):hover) {
+		background-color: var(--opaque-surface-color);
+		border-color: rgba(128, 128, 128, 0.5);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		transform: translateY(-1px);
 	}
 
-	:global(.normal-button:active) {
-		box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-		border-color: rgba(223, 225, 229, 0);
+	:global(.normal-button:not(:disabled):active) {
+		transform: translateY(0) scale(0.98);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 	}
 
 	:global(.normal-button:disabled) {
-		opacity: 0.5;
+		opacity: 0.4;
 		cursor: not-allowed;
-		box-shadow: none;
-		border-color: var(--outline-color);
 	}
 </style>
