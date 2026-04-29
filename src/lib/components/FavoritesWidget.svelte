@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-	import { Trash } from 'phosphor-svelte';
+	import { Trash, Plus } from 'phosphor-svelte';
 	import AddFavoriteModal from './AddFavoriteModal.svelte';
 	import { onMount } from 'svelte';
 
@@ -41,38 +41,47 @@
 
 	export const toggleEditMode = () => {
 		isEditMode = !isEditMode;
-	}
+	};
 
-    const deleteFavorite = (favorite: Favorite) => {
-        favorites = favorites.filter((f) => f !== favorite);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
+	const deleteFavorite = (favorite: Favorite) => {
+		favorites = favorites.filter((f) => f !== favorite);
+		localStorage.setItem('favorites', JSON.stringify(favorites));
+	};
 </script>
 
 <div class="favorites-widget glass widget">
-	<div class="favorites-list">
-		{#each favorites as favorite}
-			<div class="favorite-item-container">
-                {#if isEditMode}
-                    <button
-                        title="Delete favorite"
-                        class="edit-item-button icon-button"
-                        on:click={() => deleteFavorite(favorite)}
-                    >
-                        <Trash size={28} />
-                    </button>
-                {/if}
-				<a href={favorite.url} class="favorite-item" target="_blank" rel="noopener noreferrer">
-					<img
-						src={favorite.faviconUrl}
-						alt="Favicon of {favorite.title}"
-						class="favorite-favicon"
-					/>
-					<span class="favorite-title">{favorite.title}</span>
-				</a>
-			</div>
-		{/each}
-	</div>
+	{#if favorites.length === 0}
+		<div class="empty-favorites">
+			<button class="add-favorite-empty-button icon-button" on:click={handleAddFavorite}>
+				<Plus size={32} />
+				<span>Add Favorite</span>
+			</button>
+		</div>
+	{:else}
+		<div class="favorites-list">
+			{#each favorites as favorite}
+				<div class="favorite-item-container">
+					{#if isEditMode}
+						<button
+							title="Delete favorite"
+							class="edit-item-button icon-button"
+							on:click={() => deleteFavorite(favorite)}
+						>
+							<Trash size={28} />
+						</button>
+					{/if}
+					<a href={favorite.url} class="favorite-item" target="_blank" rel="noopener noreferrer">
+						<img
+							src={favorite.faviconUrl}
+							alt="Favicon of {favorite.title}"
+							class="favorite-favicon"
+						/>
+						<span class="favorite-title">{favorite.title}</span>
+					</a>
+				</div>
+			{/each}
+		</div>
+	{/if}
 </div>
 
 <AddFavoriteModal bind:this={modal} />
@@ -86,7 +95,37 @@
 		overflow: visible;
 	}
 
+	.empty-favorites {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		min-height: 120px;
+	}
+
+	.add-favorite-empty-button {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		color: var(--on-surface-color);
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		opacity: 0.7;
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.add-favorite-empty-button:hover {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+
 	.favorites-list {
+		height: 100%;
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: repeat(2, 1fr);
@@ -107,6 +146,7 @@
 	.favorite-item {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 4px;
 		flex-direction: column;
 		color: var(--on-surface-color);
@@ -121,8 +161,8 @@
 			border-color 0.05s ease-in-out,
 			background-color 0.05s ease-in-out;
 		cursor: pointer;
-        width: 100%;
-        height: 100%;
+		width: 100%;
+		height: 100%;
 	}
 
 	.favorite-item:hover {
@@ -130,9 +170,9 @@
 		background-color: var(--opaque-surface-color);
 	}
 
-    .favorite-item img {
-        transition: transform 0.1s ease-in-out;
-    }
+	.favorite-item img {
+		transition: transform 0.1s ease-in-out;
+	}
 
 	.favorite-favicon {
 		width: 36px;
@@ -153,39 +193,39 @@
 		gap: 8px;
 	}
 
-    .favorite-item-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
+	.favorite-item-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
 
-    .favorite-item-container:has(.edit-item-button) .favorite-item {
-        pointer-events: none;
-    }
+	.favorite-item-container:has(.edit-item-button) .favorite-item {
+		pointer-events: none;
+	}
 
-    .favorite-item-container:has(.edit-item-button) .favorite-item img {
-        transform: scale(0.8);
-    }
+	.favorite-item-container:has(.edit-item-button) .favorite-item img {
+		transform: scale(0.8);
+	}
 
-    .edit-item-button {
-        position: absolute;
-        width: 36px;
-        height: 36px;
-        background-color: var(--opaque-surface-color);
-        color: var(--on-surface-color);
-        border-radius: 50%;
-        top: 0;
-        padding: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+	.edit-item-button {
+		position: absolute;
+		width: 36px;
+		height: 36px;
+		background-color: var(--opaque-surface-color);
+		color: var(--on-surface-color);
+		border-radius: 50%;
+		top: 0;
+		padding: 6px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-        animation: fadeIn 0.1s ease-in-out;
-        z-index: 2;
+		animation: fadeIn 0.1s ease-in-out;
+		z-index: 2;
 
-        color: var(--on-surface-color);
-    }
+		color: var(--on-surface-color);
+	}
 </style>
